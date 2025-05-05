@@ -64,6 +64,24 @@ const applicationTables = {
     .index("by_page", ["pageId"])
     .index("by_owner", ["ownerId"])
     .index("by_page_and_owner", ["pageId", "ownerId"]),
+
+  drawings: defineTable({
+    pageId: v.id("pages"),
+    dataUrl: v.string(),
+    width: v.optional(v.number()),
+    height: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index("by_page", ["pageId"]),
+
+  voiceNotes: defineTable({
+    pageId: v.id("pages"),
+    audioUrl: v.string(),
+    duration: v.optional(v.number()),
+    transcription: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_page", ["pageId"]),
 };
 
 export default defineSchema({

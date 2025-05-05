@@ -206,7 +206,7 @@ export function Editor({ pageId }: { pageId: Id<"pages"> }) {
               pageId,
               dataUrl,
             });
-            editor!.chain().focus().setDrawing({ src: dataUrl }).run();
+            editor.chain().focus().setDrawing({ src: dataUrl }).run();
             setIsDrawingModalOpen(false);
           }} 
           onClose={() => setIsDrawingModalOpen(false)} 
@@ -230,7 +230,7 @@ export function Editor({ pageId }: { pageId: Id<"pages"> }) {
             });
             
             // Insert the audio element into the editor
-            editor!.chain().focus().insertContent(audioElement.outerHTML).run();
+            editor.chain().focus().insertContent(audioElement.outerHTML).run();
             setIsVoiceRecorderOpen(false);
           }} 
           onClose={() => setIsVoiceRecorderOpen(false)} 
