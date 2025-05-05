@@ -12,19 +12,26 @@ import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import SlashCommand from './tiptap-extension/SlashCommand';
+import { DrawingExtension } from './tiptap-extension/DrawingExtension';
 import { SlashCommandList } from './tiptap-ui/SlashCommandList';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import _Suggestion from '@tiptap/suggestion';
+import { DrawingCanvas } from './tiptap-ui/DrawingCanvas';
+import { VoiceRecorder } from './tiptap-ui/VoiceRecorder';
 
 export function Editor({ pageId }: { pageId: Id<"pages"> }) {
+  const createDrawing = useMutation(api.media.createDrawing);
+  const createVoiceNote = useMutation(api.media.createVoiceNote);
   const page = useQuery(api.pages.list)?.find((p) => p._id === pageId);
   const updatePage = useMutation(api.pages.update);
   const [title, setTitle] = useState(page?.title || "");
   const [_content, setContent] = useState(page?.content || "");
 
-  const [_slashQuery, setSlashQuery] = useState('');
+  const [_slashQuery] = useState('');
+  const [isDrawingModalOpen, setIsDrawingModalOpen] = useState(false);
+  const [isVoiceRecorderOpen, setIsVoiceRecorderOpen] = useState(false);
 
   const editor = useEditor({
+    editable: true,
+    autofocus: true,
     extensions: [
       StarterKit.configure({
         heading: {
@@ -47,6 +54,7 @@ export function Editor({ pageId }: { pageId: Id<"pages"> }) {
           },
         },
       }),
+      DrawingExtension,
     ],
     content: page?.content || '',
     onUpdate: ({ editor }) => {
@@ -177,7 +185,56 @@ export function Editor({ pageId }: { pageId: Id<"pages"> }) {
           >
             Right
           </button>
+          <button
+            onClick={() => setIsDrawingModalOpen(true)}
+            className="px-2 py-1 rounded bg-gray-200"
+          >
+            Drawing
+          </button>
+          <button
+            onClick={() => setIsVoiceRecorderOpen(true)}
+            className="px-2 py-1 rounded bg-gray-200"
+          >
+            Voice Recorder
+          </button>
         </div>
+      )}
+      {isDrawingModalOpen && editor && (
+        <DrawingCanvas 
+          onSave={(dataUrl) => {
+            void createDrawing({
+              pageId,
+              dataUrl,
+            });
+            editor!.chain().focus().setDrawing({ src: dataUrl }).run();
+            setIsDrawingModalOpen(false);
+          }} 
+          onClose={() => setIsDrawingModalOpen(false)} 
+        />
+      )}
+      {isVoiceRecorderOpen && editor && (
+        <VoiceRecorder 
+          onSave={(audioBlob) => {
+            const audioUrl = URL.createObjectURL(audioBlob);
+            
+            // Create an audio element in the editor
+            const audioElement = document.createElement('audio');
+            audioElement.src = audioUrl;
+            audioElement.controls = true;
+            
+            // Save voice note to Convex
+            void createVoiceNote({
+              pageId,
+              audioUrl,
+              duration: audioElement.duration,
+            });
+            
+            // Insert the audio element into the editor
+            editor!.chain().focus().insertContent(audioElement.outerHTML).run();
+            setIsVoiceRecorderOpen(false);
+          }} 
+          onClose={() => setIsVoiceRecorderOpen(false)} 
+        />
       )}
     </div>
   );
