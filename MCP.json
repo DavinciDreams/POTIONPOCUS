@@ -1,0 +1,29 @@
+{
+    "mcpServers": {
+      "tiptap Docs": {
+        "serverUrl": "https://gitmcp.io/ueberdosis/tiptap"
+      },
+       "convex-backend Docs": {
+        "serverUrl": "https://gitmcp.io/get-convex/convex-backend"
+      },
+      "convex-helpers Docs": {
+        "serverUrl": "https://gitmcp.io/get-convex/convex-helpers"
+      },
+      "convex-js Docs": {
+        "serverUrl": "https://gitmcp.io/get-convex/convex-js"
+      },
+      "tiptap-ui-components Docs": {
+        "serverUrl": "https://gitmcp.io/ueberdosis/tiptap-ui-components"
+      },
+      "tiptap-docs Docs": {
+        "serverUrl": "https://gitmcp.io/ueberdosis/tiptap-docs"
+      },
+      "hocuspocus Docs": {
+        "serverUrl": "https://gitmcp.io/ueberdosis/hocuspocus"
+      },
+      "y-tiptap Docs": {
+        "serverUrl": "https://gitmcp.io/ueberdosis/y-tiptap"
+      }
+
+    }
+}
