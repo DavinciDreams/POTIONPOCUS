@@ -1,4 +1,4 @@
-# Basic Notion Clone Setup
+i# Basic Notion Clone Setup
   
 This is a project built with [Chef](https://chef.convex.dev) using [Convex](https://convex.dev) as its backend.
   

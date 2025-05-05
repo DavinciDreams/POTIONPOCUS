@@ -40,6 +40,30 @@ body {
   @apply w-full px-3 py-2 rounded-md bg-transparent border-2 border-slate-200 focus:outline-none focus:border-blue-500 transition-colors;
 }
 
+.ProseMirror {
+  outline: none;
+  min-height: 200px;
+  padding: 10px;
+}
+
+.ProseMirror h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ProseMirror p {
+  margin-bottom: 10px;
+}
+
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
 .auth-button {
   @apply w-full py-2 rounded-md text-white font-medium button hover:opacity-90 transition-opacity;
 }
