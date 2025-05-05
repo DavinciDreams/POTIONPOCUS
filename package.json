@@ -29,6 +29,7 @@
     "@tiptap/suggestion": "^2.11.9",
     "clsx": "^2.1.1",
     "convex": "1.21.1-alpha.1",
+    "convex-helpers": "^0.1.84",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sonner": "^2.0.3",
