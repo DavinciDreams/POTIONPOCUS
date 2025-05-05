@@ -15,6 +15,8 @@ import type {
 } from "convex/server";
 import type * as auth from "../auth.js";
 import type * as database from "../database.js";
+import type * as document from "../document.js";
+import type * as files from "../files.js";
 import type * as http from "../http.js";
 import type * as media from "../media.js";
 import type * as pages from "../pages.js";
@@ -31,6 +33,8 @@ import type * as router from "../router.js";
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   database: typeof database;
+  document: typeof document;
+  files: typeof files;
   http: typeof http;
   media: typeof media;
   pages: typeof pages;
