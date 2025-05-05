@@ -1,25 +1,33 @@
+// src/components/tiptap-extension/SlashCommand.ts
 import { Extension } from '@tiptap/core';
 import Suggestion from '@tiptap/suggestion';
+import { PluginKey } from 'prosemirror-state';
+import type { Editor } from '@tiptap/react';
+import React from 'react';
 
 export interface SlashCommandOptions {
   suggestion: {
     char?: string;
-    pluginKey?: string;
-    command?: (props: { editor: any; range: any; props: any }) => void;
+    pluginKey?: PluginKey;
+    editor?: Editor;
+    command?: (props: {
+      editor: Editor;
+      range: { from: number; to: number };
+      props: any;
+    }) => React.ReactElement;
   };
 }
 
-const SlashCommand = Extension.create<SlashCommandOptions>({
+export const SlashCommand = Extension.create<SlashCommandOptions>({
   name: 'slashCommand',
-
+  
   addOptions() {
     return {
       suggestion: {
         char: '/',
-        pluginKey: 'slashCommand',
-        command: ({ editor, range, props }) => {
-          props.command(editor, range);
-        },
+        pluginKey: new PluginKey('slash-commands'),
+        editor: undefined,
+        command: undefined,
       },
     };
   },
@@ -27,8 +35,10 @@ const SlashCommand = Extension.create<SlashCommandOptions>({
   addProseMirrorPlugins() {
     return [
       Suggestion({
-        editor: this.editor,
-        ...this.options.suggestion,
+        editor: this.options.suggestion.editor,
+        char: this.options.suggestion.char,
+        pluginKey: this.options.suggestion.pluginKey,
+        command: this.options.suggestion.command,
       }),
     ];
   },
